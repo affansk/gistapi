@@ -1,0 +1,36 @@
+import {
+  signin,
+  deviceType,
+  getLocation,
+  getMake,
+  getServices,
+  getDealer,
+  getAllLocation,
+  getAllModel,
+  getAllMake,
+  getAllVariant,
+  generateAllPolicy,
+  generateAllExtensionDropPolicies,
+  getAllDashBoardPolicies,
+  getDashBoardLine,
+  getDashBoardDonut,
+  getDashBoardBar
+} from './api';
+export {
+  signin,
+  deviceType,
+  getLocation,
+  getMake,
+  getServices,
+  getDealer,
+  getAllLocation,
+  getAllModel,
+  getAllMake,
+  getAllVariant,
+  generateAllPolicy,
+  generateAllExtensionDropPolicies,
+  getAllDashBoardPolicies,
+  getDashBoardLine,
+  getDashBoardDonut,
+  getDashBoardBar
+};
