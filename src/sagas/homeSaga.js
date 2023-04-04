@@ -1,19 +1,16 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { signin } from '@app/services';
-import { EncryptedStorage } from '@app/components';
+import { gist } from '../services/index';
+
 import {
   gistSuccess,
   gistFailed,
 } from '../slice/HomeSlice';
 
 function* gistAction(action) {
-  const { payload } = action;
-  const getCountryId = yield EncryptedStorage.getItem('selectedRegion');
-  const response = yield call(signin, {
-    ...payload,
-    CountryId: getCountryId,
-  });
-  if (response?.data?.IsSuccess === true) {
+  const response = yield call(gist);
+  const { status} = response || {};
+  console.log(response,"response??");
+  if (status === 200) {
     yield put(gistSuccess(response?.data));
   } else {
     yield put(gistFailed(response));

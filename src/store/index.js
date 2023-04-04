@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import homeReducer from '@app/slice/homeSlice';
-import {rootSaga} from '@app/sagas';
+import homeReducer from '../slice/HomeSlice';
+import {rootSaga} from '../sagas';
 
 const saga = createSagaMiddleware();
 const middleware = [saga]

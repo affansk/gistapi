@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
+const initialState ={
+    gistLoading : false,
+    gistData : undefined,
+    gistError : undefined
+}
 
 export const homeSlice = createSlice({
     name: 'home',
@@ -9,13 +13,13 @@ export const homeSlice = createSlice({
         getGist: state => {
             state.gistLoading = true;
         },
-        gistSuccess: (state, payload) => {
+        gistSuccess: (state, data) => {
             state.gistLoading = false;
-            state.gistData = payload;
+            state.gistData = data?.payload;
         },
-        gistFailed: (state, payload) => {
+        gistFailed: (state, data) => {
             state.gistLoading = false;
-            state.gistError = payload;
+            state.gistError = data?.payload;
         },
     },
 });

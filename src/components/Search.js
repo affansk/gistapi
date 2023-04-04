@@ -1,13 +1,15 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import styled from 'styled-components'
 import Octicon from 'react-octicon'
-
-const Search = () => {
+import { gistContext } from '../App';
+const Search = (props) => {
+  const gistAppContext = useContext(gistContext);
+  const {searchText} = gistAppContext;
   return (
     <Wrapper>
       <InputBox>
       <Octicon name="search" />
-      <Input placeholder="Search Gists for the username"/>
+      <Input placeholder="Search Gists for the username" onChange={searchText}/>
       </InputBox>
     </Wrapper>
   )
