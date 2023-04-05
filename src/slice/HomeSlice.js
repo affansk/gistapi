@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-const initialState ={
+ export var initialState ={
     gistLoading : false,
     gistData : undefined,
     gistError : undefined
@@ -28,7 +27,7 @@ export const homeSlice = createSlice({
 export const {
     getGist,
     gistSuccess,
-    gistFailed
+    gistFailed,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;
