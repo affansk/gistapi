@@ -1,25 +1,26 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render as rtlRender, screen } from '@testing-library/react';
 import GistList from './GistList';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import gistsReducer from '../slice/HomeSlice';
 
+
 describe('GistList component', () => {
   let store;
+  let render;
   beforeEach(() => {
-    store = configureStore({
-      reducer: {
-        gists: gistsReducer,
-      },
-    });
+    store = configureStore({ reducer: { gists: gistsReducer } });
+    render = component => rtlRender(
+      <Provider store={store}>
+        {component}
+      </Provider>
+    )
   });
 
   it('should render "Gist Loading.." message when loading is true', () => {
     render(
-      <Provider store={store}>
         <GistList isLoading={true} gist={[]} filterObjectLength={0}/>
-      </Provider>
     );
     const loadingMessage = screen.getByText(/Gist Loading\.\./i);
     expect(loadingMessage).toBeInTheDocument();
@@ -27,9 +28,7 @@ describe('GistList component', () => {
 
   it('should render "No Available Data" message when loading is false and gist prop is undefined', () => {
     render(
-      <Provider store={store}>
         <GistList isLoading={false} gist={undefined} filterObjectLength={0} />
-      </Provider>
     );
     const noDataMessage = screen.getByText(/No Available Data/i);
     expect(noDataMessage).toBeInTheDocument();
@@ -37,9 +36,7 @@ describe('GistList component', () => {
 
   it('should render "No Data Found!" message when loading is false, gist prop is not undefined, and filterObjectLength is 0', () => {
     render(
-      <Provider store={store}>
         <GistList isLoading={false} gist={[{ id: '123' }]} filterObjectLength={0} sText={"oliver"} />
-      </Provider>
     );
     const noDataFoundMessage = screen.getByText(/No Data Found!/i);
     expect(noDataFoundMessage).toBeInTheDocument();
@@ -51,14 +48,14 @@ describe('GistList component', () => {
         id: '123',
         owner: {
           avatar_url: 'https://avatars.githubusercontent.com/u/8557526?v=4',
-          login: 'testuser',
+          login: 'affanuser',
         },
         description: 'Test gist',
         files: {
-          'test-file-1.js': {
+          'gist-file-1.js': {
             raw_url: 'https://gist.githubusercontent.com/AlenRedek/f48ecca295afaec18c532df2e32817dd/raw/e3fcaff5f1c64f63600881962ce303d68270a212/init.php',
           },
-          'test-file-2.js': {
+          'gist-file-2.js': {
             raw_url: 'hhttps://gist.githubusercontent.com/AlenRedek/f48ecca295afaec18c532df2e32817dd/raw/e3fcaff5f1c64f63600881962ce303d68270a212/init.php',
           },
         },
@@ -71,13 +68,11 @@ describe('GistList component', () => {
     ];
 
     render(
-      <Provider store={store}>
         <GistList isLoading={false} gist={testGistData} filterObjectLength={1} />
-      </Provider>
     );
 
-    const gistData = screen.getByText(/testuser/i);
-    const gistFiles = screen.getAllByText(/test-file/i);
+    const gistData = screen.getByText(/affanuser/i);
+    const gistFiles = screen.getAllByText(/gist-file/i);
     expect(gistData).toBeInTheDocument();
     expect(gistFiles.length).toBe(2);
   });

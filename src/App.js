@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useMemo } from 'react';
+import React, { createContext, useEffect, useState, useMemo , useCallback} from 'react';
 import styled from 'styled-components'
 import Header from "./components/Header";
 import GistList from "./components/GistList";
@@ -70,12 +70,18 @@ const App = () => {
 * Output: will filter out the list by name
 */
 
-  const searchText = async (event) => {
+  // const searchTextGist = async (event) => {
+  //   const text = event.target.value.trim().toLowerCase();
+  //   setSText(text);
+  //   const getFilteredData = filterByName(gistList, text);
+  //   setFilterGist(getFilteredData);
+  // }
+  const searchTextGist = useCallback((event) => {
     const text = event.target.value.trim().toLowerCase();
     setSText(text);
     const getFilteredData = filterByName(gistList, text);
     setFilterGist(getFilteredData);
-  }
+  }, [gistList]);
 
   /*
 * This Method is getting called from searchText Method, it will filter the list by name and show you those details.
@@ -95,7 +101,7 @@ const App = () => {
   // i am using context hook to pass function refrence to deep down component. so i dont need to create hierrachy by passing ref function to parent
   return (
     <gistContext.Provider value={{
-      searchText: searchText
+      searchText: searchTextGist
     }}>
       <Wrapper className="App" data-testid="app">
         <GlobalStyles />

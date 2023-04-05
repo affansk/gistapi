@@ -49,7 +49,9 @@ const GistList = (props) => {
                                                         <Octicon name="code" small='true' />
                                                     </ContainerIcon>
                                                     <ContainerText>
-                                                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={'#'}>{`${Object.keys(item?.files).length} Files`}</a></p>
+                                                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={'#'}>
+                                                        {item?.files ? `${Object.keys(item.files).length} Files` : 'No files'}
+                                                            </a></p>
                                                         {/* <h5>{`${Object.keys(item?.files).length} Files`}</h5> */}
                                                     </ContainerText>
                                                 </ContainerHeaderRightData>
@@ -95,7 +97,7 @@ const GistList = (props) => {
                                             {`${item?.description}`}
                                         </GenratedSection>
                                         <FileSection>
-                                            {Object.entries(item?.files).map(([key, value]) => {
+                                            {item?.files && Object.entries(item?.files).map(([key, value]) => {
                                                 return (
                                                     <div key={`${key}-${value}`}>
                                                         <FileIcon>
