@@ -5,9 +5,9 @@ import { store } from './store';
 import { Provider as ReduxProvider } from 'react-redux';
 ReactDOM.render(
   <ReduxProvider store={store}>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <App />
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </ReduxProvider>,
   document.getElementById('root')
 );

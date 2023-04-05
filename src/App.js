@@ -10,7 +10,9 @@ const App = () => {
   const dispatch = useDispatch();
   const gist = useSelector(state => state?.home); // this is redux selector to catch data globally within the app
   const [gistList, setGistList] = useState([]) // this will setstate once api gives response
-
+  const [filterGist, setFilterGist] = useState([]);
+  const [sText, setSText] = useState();
+  const { gistLoading } = gist;
   /*
   * This useEffect Hooks call Data fronm API
   * Input: get method to call api
@@ -58,30 +60,47 @@ const App = () => {
 
   const memoizeGistList = useMemo(() => {
     return (
-      <GistList gist={gistList} />
+      <GistList gist={filterGist.length > 0 ? filterGist : gistList} filterObjectLength={filterGist?.length} isLoading={gistLoading} sText={sText} />
     );
-  }, [gistList]);
+  }, [gistList, filterGist, gistLoading, sText]);
 
   /*
 * This Method is getting called from search Component via context
 * Input: will take input
 * Output: will filter out the list by name
 */
-  const searchText = (event) => {
-    console.log("text", event.target.value)
+
+  const searchText = async (event) => {
+    const text = event.target.value.trim().toLowerCase();
+    setSText(text);
+    const getFilteredData = filterByName(gistList, text);
+    setFilterGist(getFilteredData);
+  }
+
+  /*
+* This Method is getting called from searchText Method, it will filter the list by name and show you those details.
+* Input: will take Text as Input
+* Output: will filter out the list by name
+*/
+  const filterByName = (object, text) => {
+    return object.filter(item => {
+      const {owner} = item;
+      return owner?.login.toLowerCase().includes(text);
+    });
+    ;
   }
 
 
   // From Here it starts the main jsx where you return the View
-  // i am using context jook to pass function refrence to deep down component. so i dont need to create hierrachy by passing function to parent
+  // i am using context hook to pass function refrence to deep down component. so i dont need to create hierrachy by passing ref function to parent
   return (
     <gistContext.Provider value={{
-      searchText:searchText
-    }}> 
+      searchText: searchText
+    }}>
       <Wrapper className="App" data-testid="app">
+        <GlobalStyles />
         {memoizeHeader}
         {memoizeGistList}
-        <GlobalStyles />
       </Wrapper>
     </gistContext.Provider>
   );
