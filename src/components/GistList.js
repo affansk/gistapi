@@ -1,6 +1,6 @@
 import React, { useMemo} from 'react'
 
-import { FileTags, FileIcon, FileSection, GenratedSection, ContainerCreated, ContainerCreatedSection, Avatar, ContainerHeaderRight, ContainerIcon, ContainerText, ContainerHeaderRightData, InnerContainer, Container, ContainerHeader, ContainerHeaderLeft, ContainerAvatarSec, AvatarName } from '../components/styles/styles.styled'
+import { FileTags, FileIcon,InnerFileSection, FileSection, GenratedSection, ContainerCreated, ContainerCreatedSection, Avatar, ContainerHeaderRight, ContainerIcon, ContainerText, ContainerHeaderRightData, InnerContainer, Container, ContainerHeader, ContainerHeaderLeft, ContainerAvatarSec, AvatarName } from '../components/styles/styles.styled'
 import Octicon from 'react-octicon';
 import PropTypes from 'prop-types';
 
@@ -28,7 +28,7 @@ const GistList = (props) => {
                             <p>No Data Found!</p>
                             :
                             gist?.map((item, index) => {
-                                const {owner} = item;
+                                const {owner,created_at,updated_at} = item;
                                 return (
                                     <InnerContainer key={index}>
                                         <ContainerHeader>
@@ -85,10 +85,10 @@ const GistList = (props) => {
                                         </ContainerHeader>
                                         <ContainerCreatedSection>
                                             <ContainerCreated>
-                                                {`Created at: ${getFormattedDate(item?.created_at)}`}
+                                                {`Created at: ${getFormattedDate(created_at)}`}
                                             </ContainerCreated>
                                             <ContainerCreated>
-                                                {`Updated at: ${getFormattedDate(item?.updated_at)}`}
+                                                {`Updated at: ${getFormattedDate(updated_at)}`}
                                             </ContainerCreated>
 
 
@@ -99,14 +99,17 @@ const GistList = (props) => {
                                         <FileSection>
                                             {item?.files && Object.entries(item?.files).map(([key, value]) => {
                                                 return (
-                                                    <div key={`${key}-${value}`}>
+                                                    <InnerFileSection key={`${key}-${value}`}>
+                                                 
                                                         <FileIcon>
                                                             <Octicon name="file" small='true' />
                                                         </FileIcon>
                                                         <FileTags>
                                                             <p> <a rel="noreferrer" key={key} target='_blank' href={value?.raw_url}>{key}</a></p>
                                                         </FileTags>
-                                                    </div>
+                                                   
+                                      
+                                                    </InnerFileSection>
                                                 )
                                             })}
                                         </FileSection>

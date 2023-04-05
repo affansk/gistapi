@@ -88,6 +88,12 @@ export const FileSection = styled.div`
 display: flex;
 flex-direction: row;
 align-items:center;
+max-width:100%
+`
+export const InnerFileSection = styled.div`
+display: flex;
+flex-direction: row;
+align-items:center;
 `
 export const FileTags = styled.div`
 display: flex;
