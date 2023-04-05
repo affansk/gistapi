@@ -69,13 +69,6 @@ const App = () => {
 * Input: will take input
 * Output: will filter out the list by name
 */
-
-  // const searchTextGist = async (event) => {
-  //   const text = event.target.value.trim().toLowerCase();
-  //   setSText(text);
-  //   const getFilteredData = filterByName(gistList, text);
-  //   setFilterGist(getFilteredData);
-  // }
   const searchTextGist = useCallback((event) => {
     const text = event.target.value.trim().toLowerCase();
     setSText(text);
@@ -88,13 +81,12 @@ const App = () => {
 * Input: will take Text as Input
 * Output: will filter out the list by name
 */
-  const filterByName = (object, text) => {
+  const filterByName = useCallback((object, text) => {
     return object.filter(item => {
-      const {owner} = item;
+      const { owner } = item;
       return owner?.login.toLowerCase().includes(text);
     });
-    ;
-  }
+  }, []);
 
 
   // From Here it starts the main jsx where you return the View
