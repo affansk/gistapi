@@ -1,10 +1,9 @@
 import React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import App, { gistContext } from './App';
-import Search from './components/Search';
 
 // create a mock Redux store
 const mockStore = configureStore([]);

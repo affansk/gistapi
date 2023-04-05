@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useMemo , useCallback} from 'react';
+import React, { createContext, useEffect, useState, useMemo, useCallback } from 'react';
 import styled from 'styled-components'
 import Header from "./components/Header";
 import GistList from "./components/GistList";
@@ -65,7 +65,7 @@ const App = () => {
   }, [gistList, filterGist, gistLoading, sText]);
 
   /*
-* This Method is getting called from search Component via context
+* This Method is using useCallback and getting called from search Component via context
 * Input: will take input
 * Output: will filter out the list by name
 */
@@ -77,7 +77,7 @@ const App = () => {
   }, [gistList]);
 
   /*
-* This Method is getting called from searchText Method, it will filter the list by name and show you those details.
+* This Method is using useCallback and getting called from searchText Method, it will filter the list by name and show you those details.
 * Input: will take Text as Input
 * Output: will filter out the list by name
 */
