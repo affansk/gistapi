@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react'
 
-import { CenteredParagraph,FileTags, FileIcon, InnerFileSection, FileSection, GenratedSection, ContainerCreated, ContainerCreatedSection, Avatar, ContainerHeaderRight, ContainerIcon, ContainerText, ContainerHeaderRightData, InnerContainer, Container, ContainerHeader, ContainerHeaderLeft, ContainerAvatarSec, AvatarName } from '../components/styles/styles.styled'
+import { CenteredParagraph, FileTags, FileIcon, InnerFileSection, FileSection, GenratedSection, ContainerCreated, ContainerCreatedSection, Avatar, ContainerHeaderRight, ContainerIcon, ContainerText, ContainerHeaderRightData, InnerContainer, Container, ContainerHeader, ContainerHeaderLeft, ContainerAvatarSec, AvatarName } from '../components/styles/styles.styled'
 import Octicon from 'react-octicon';
 import PropTypes from 'prop-types';
 
 
 const GistList = (props) => {
     // This component will receave all needed props. 
-    const { sText, filterObjectLength, gist, isLoading,isError } = props;
+    const { sText, filterObjectLength, gist, isLoading, isError } = props;
     /* 
     This Functions format the date with function memoization
     input : This FUnctions Take Date Receive from API 
@@ -35,10 +35,10 @@ const GistList = (props) => {
                         <InnerFileSection key={`${key}-${value}`}>
 
                             <FileIcon>
-                                <Octicon name="file" small='true' style={{ color: '#2974da' }}  />
+                                <Octicon name="file" small='true' style={{ color: '#2974da' }} />
                             </FileIcon>
                             <FileTags>
-                                <p> <a style={{ color: '#2974da' }}  rel="noreferrer" key={key} target='_blank' href={value?.raw_url}>{key}</a></p>
+                                <p> <a style={{ color: '#2974da' }} rel="noreferrer" key={key} target='_blank' href={value?.raw_url}>{key}</a></p>
                             </FileTags>
 
 
@@ -58,10 +58,10 @@ const GistList = (props) => {
             <ContainerHeaderRight>
                 <ContainerHeaderRightData>
                     <ContainerIcon>
-                        <Octicon name="code" small='true'  style={{ color: '#2974da' }}/>
+                        <Octicon name="code" small='true' style={{ color: '#2974da' }} />
                     </ContainerIcon>
                     <ContainerText>
-                        <p> <a rel="noreferrer" key={'#'}  href={'/'} style={{color: '#2974da'}}>
+                        <p> <a rel="noreferrer" key={'#'} href={'/'} style={{ color: '#2974da' }}>
                             {item?.files ? `${Object.keys(item.files).length} Files` : 'No files'}
                         </a></p>
                     </ContainerText>
@@ -71,7 +71,7 @@ const GistList = (props) => {
                         <Octicon name="repo-forked" small='true' style={{ color: '#2974da' }} />
                     </ContainerIcon>
                     <ContainerText>
-                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.forks_url} style={{color: '#2974da'}}>Forks</a></p>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.forks_url} style={{ color: '#2974da' }}>Forks</a></p>
                     </ContainerText>
                 </ContainerHeaderRightData>
                 <ContainerHeaderRightData>
@@ -79,7 +79,7 @@ const GistList = (props) => {
                         <Octicon name="comment" small='true' style={{ color: '#2974da' }} />
                     </ContainerIcon>
                     <ContainerText>
-                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.comments_url} style={{color: '#2974da'}}>Comments</a></p>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.comments_url} style={{ color: '#2974da' }}>Comments</a></p>
                     </ContainerText>
                 </ContainerHeaderRightData>
                 <ContainerHeaderRightData>
@@ -87,7 +87,7 @@ const GistList = (props) => {
                         <Octicon name="star" small='true' style={{ color: '#2974da' }} />
                     </ContainerIcon>
                     <ContainerText>
-                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.owner?.starred_url} style={{color: '#2974da'}}>Stars</a></p>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.owner?.starred_url} style={{ color: '#2974da' }}>Stars</a></p>
                     </ContainerText>
                 </ContainerHeaderRightData>
 
@@ -133,8 +133,6 @@ const GistList = (props) => {
                                             <ContainerCreated>
                                                 {`Updated at: ${getFormattedDate(updated_at)}`}
                                             </ContainerCreated>
-
-
                                         </ContainerCreatedSection>
                                         <GenratedSection>
                                             {`${item?.description}`}
@@ -148,12 +146,14 @@ const GistList = (props) => {
         </Container>
     )
 }
+
+// This Is for Type Checking of Props/Params. it will allow those which is part of this propstype
 GistList.propTypes = {
     sText: PropTypes.string,
     isLoading: PropTypes.bool.isRequired,
     filterObjectLength: PropTypes.number.isRequired,
     gist: PropTypes.array,
-    isError:PropTypes.bool
+    isError: PropTypes.bool
 };
 
 
