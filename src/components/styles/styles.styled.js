@@ -13,10 +13,13 @@ padding-bottom: 20px;
 border-bottom:2px solid #f5f5f6;
 `
 export const ContainerHeader = styled.div`
-display: flex;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items:center
+  align-items:center;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 export const ContainerHeaderRight = styled.div`
 float:left
@@ -88,12 +91,14 @@ export const FileSection = styled.div`
 display: flex;
 flex-direction: row;
 align-items:center;
-max-width:100%
+max-width:100%,
+flex-wrap:wrap
 `
 export const InnerFileSection = styled.div`
 display: flex;
 flex-direction: row;
 align-items:center;
+flex-wrap:wrap
 `
 export const FileTags = styled.div`
 display: flex;
