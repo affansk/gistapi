@@ -9,11 +9,10 @@ import {
 function* gistAction(action) {
   const response = yield call(gist);
   const { status} = response || {};
-  console.log(response,"response??");
   if (status === 200) {
     yield put(gistSuccess(response?.data));
   } else {
-    yield put(gistFailed(response));
+    yield put(gistFailed({message:'someething Wrong with response. Please Try Again!'})); // Here we can display dynamic error reponse from API. just ned to replace message with dyanmic message from api.
   }
 
 }

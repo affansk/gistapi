@@ -115,3 +115,10 @@ export const FileIcon = styled.div`
 display: flex;
 flex-direction: row;
 `
+
+export const CenteredParagraph = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;

@@ -1,34 +1,115 @@
-import React, { useMemo} from 'react'
+import React, { useMemo } from 'react'
 
-import { FileTags, FileIcon,InnerFileSection, FileSection, GenratedSection, ContainerCreated, ContainerCreatedSection, Avatar, ContainerHeaderRight, ContainerIcon, ContainerText, ContainerHeaderRightData, InnerContainer, Container, ContainerHeader, ContainerHeaderLeft, ContainerAvatarSec, AvatarName } from '../components/styles/styles.styled'
+import { CenteredParagraph,FileTags, FileIcon, InnerFileSection, FileSection, GenratedSection, ContainerCreated, ContainerCreatedSection, Avatar, ContainerHeaderRight, ContainerIcon, ContainerText, ContainerHeaderRightData, InnerContainer, Container, ContainerHeader, ContainerHeaderLeft, ContainerAvatarSec, AvatarName } from '../components/styles/styles.styled'
 import Octicon from 'react-octicon';
 import PropTypes from 'prop-types';
 
 
 const GistList = (props) => {
-    const { sText, filterObjectLength, gist, isLoading } = props;
-
+    const { sText, filterObjectLength, gist, isLoading,isError } = props;
+    // console.log("gist",gist,isLoading)
+    /* 
+    This Functions format the date with function memoization
+    input : This FUnctions Take Date Receive from API 
+    Output : This Function Outpit the formatted Date.
+    */
     const getFormattedDate = useMemo(
         () => (dateS) => {
-          const dateString = dateS;
-          const date = new Date(dateString);
-          return `${date.getMonth() + 1}/${date.getDate() - 1}/${date.getFullYear()}`;
+            const dateString = dateS;
+            const date = new Date(dateString);
+            return `${date.getMonth() + 1}/${date.getDate() - 1}/${date.getFullYear()}`;
         },
         []
-      );
+    );
+
+    /* 
+    We have Seperated The Ui for Readibilty
+    input : This FUnctions Take item as parameter, because some of the value is dependend on API resonse
+    Output : This FUnction Render Section with contant all user files
+    */
+    const renderFileSection = (item) => {
+        return (
+            <FileSection>
+                {item?.files && Object.entries(item?.files).map(([key, value]) => {
+                    return (
+                        <InnerFileSection key={`${key}-${value}`}>
+
+                            <FileIcon>
+                                <Octicon name="file" small='true' />
+                            </FileIcon>
+                            <FileTags>
+                                <p> <a rel="noreferrer" key={key} target='_blank' href={value?.raw_url}>{key}</a></p>
+                            </FileTags>
+
+
+                        </InnerFileSection>
+                    )
+                })}
+            </FileSection>
+        )
+    }
+    /* 
+   We have Seperated The Ui for Readibilty
+   input : This FUnctions Take item as parameter, because some of the value is dependend on API resonse
+   Output : This FUnction Render Section with contant like fork, comments, etc.
+   */
+    const renderContaineHeaderRight = (item) => {
+        return (
+            <ContainerHeaderRight>
+                <ContainerHeaderRightData>
+                    <ContainerIcon>
+                        <Octicon name="code" small='true' />
+                    </ContainerIcon>
+                    <ContainerText>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={'#'}>
+                            {item?.files ? `${Object.keys(item.files).length} Files` : 'No files'}
+                        </a></p>
+                    </ContainerText>
+                </ContainerHeaderRightData>
+                <ContainerHeaderRightData>
+                    <ContainerIcon>
+                        <Octicon name="repo-forked" small='true' />
+                    </ContainerIcon>
+                    <ContainerText>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.forks_url}>Fork</a></p>
+                    </ContainerText>
+                </ContainerHeaderRightData>
+                <ContainerHeaderRightData>
+                    <ContainerIcon>
+                        <Octicon name="comment" small='true' />
+                    </ContainerIcon>
+                    <ContainerText>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.comments_url}>Comments</a></p>
+                    </ContainerText>
+                </ContainerHeaderRightData>
+                <ContainerHeaderRightData>
+                    <ContainerIcon>
+                        <Octicon name="star" small='true' />
+                    </ContainerIcon>
+                    <ContainerText>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.owner?.starred_url}>Stars</a></p>
+                    </ContainerText>
+                </ContainerHeaderRightData>
+
+
+            </ContainerHeaderRight>
+        )
+    }
+
+
     return (
         <Container>
 
             {
-                isLoading ? <p>Gist Loading..</p>
+                isLoading ? <CenteredParagraph>Gist Loading..</CenteredParagraph>
                     :
-                    !isLoading && gist === undefined ?
-                        <p>No Available Data</p>
+                    !isLoading && isError ?
+                        <CenteredParagraph>Some Problem in Loading Data</CenteredParagraph>
                         : sText?.length > 0 && filterObjectLength === 0 ?
-                            <p>No Data Found!</p>
+                            <CenteredParagraph>No Data Found!</CenteredParagraph>
                             :
                             gist?.map((item, index) => {
-                                const {owner,created_at,updated_at} = item;
+                                const { owner, created_at, updated_at } = item;
                                 return (
                                     <InnerContainer key={index}>
                                         <ContainerHeader>
@@ -43,45 +124,7 @@ const GistList = (props) => {
                                                 </ContainerAvatarSec>
 
                                             </ContainerHeaderLeft>
-                                            <ContainerHeaderRight>
-                                                <ContainerHeaderRightData>
-                                                    <ContainerIcon>
-                                                        <Octicon name="code" small='true' />
-                                                    </ContainerIcon>
-                                                    <ContainerText>
-                                                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={'#'}>
-                                                        {item?.files ? `${Object.keys(item.files).length} Files` : 'No files'}
-                                                            </a></p>
-                                                        {/* <h5>{`${Object.keys(item?.files).length} Files`}</h5> */}
-                                                    </ContainerText>
-                                                </ContainerHeaderRightData>
-                                                <ContainerHeaderRightData>
-                                                    <ContainerIcon>
-                                                        <Octicon name="repo-forked" small='true' />
-                                                    </ContainerIcon>
-                                                    <ContainerText>
-                                                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.forks_url}>Fork</a></p>
-                                                    </ContainerText>
-                                                </ContainerHeaderRightData>
-                                                <ContainerHeaderRightData>
-                                                    <ContainerIcon>
-                                                        <Octicon name="comment" small='true' />
-                                                    </ContainerIcon>
-                                                    <ContainerText>
-                                                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.comments_url}>Comments</a></p>
-                                                    </ContainerText>
-                                                </ContainerHeaderRightData>
-                                                <ContainerHeaderRightData>
-                                                    <ContainerIcon>
-                                                        <Octicon name="star" small='true' />
-                                                    </ContainerIcon>
-                                                    <ContainerText>
-                                                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.owner?.starred_url}>Stars</a></p>
-                                                    </ContainerText>
-                                                </ContainerHeaderRightData>
-
-
-                                            </ContainerHeaderRight>
+                                            {renderContaineHeaderRight(item)}
                                         </ContainerHeader>
                                         <ContainerCreatedSection>
                                             <ContainerCreated>
@@ -96,7 +139,7 @@ const GistList = (props) => {
                                         <GenratedSection>
                                             {`${item?.description}`}
                                         </GenratedSection>
-                                        <FileSection>
+                                        {/* <FileSection>
                                             {item?.files && Object.entries(item?.files).map(([key, value]) => {
                                                 return (
                                                     <InnerFileSection key={`${key}-${value}`}>
@@ -112,7 +155,8 @@ const GistList = (props) => {
                                                     </InnerFileSection>
                                                 )
                                             })}
-                                        </FileSection>
+                                        </FileSection> */}
+                                        {renderFileSection(item)}
                                     </InnerContainer>
                                 )
                             }
@@ -126,6 +170,7 @@ GistList.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     filterObjectLength: PropTypes.number.isRequired,
     gist: PropTypes.array,
+    isError:PropTypes.bool
 };
 
 

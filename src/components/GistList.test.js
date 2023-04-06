@@ -26,11 +26,11 @@ describe('GistList component', () => {
     expect(loadingMessage).toBeInTheDocument();
   });
 
-  it('should render "No Available Data" message when loading is false and gist prop is undefined', () => {
+  it('should render "Some Problem in Loading Data" message when loading is false and gist prop is undefined', () => {
     render(
-        <GistList isLoading={false} gist={undefined} filterObjectLength={0} />
+        <GistList isLoading={false} gist={undefined} filterObjectLength={0} isError={true}/>
     );
-    const noDataMessage = screen.getByText(/No Available Data/i);
+    const noDataMessage = screen.getByText(/Some Problem in Loading Data/i);
     expect(noDataMessage).toBeInTheDocument();
   });
 

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useMemo, useCallback } from 'react';
+import React, { createContext, useEffect, useMemo, useCallback, useReducer } from 'react';
 import styled from 'styled-components'
 import Header from "./components/Header";
 import GistList from "./components/GistList";
@@ -6,13 +6,44 @@ import GlobalStyles from "./GlobalStyle";
 import { useDispatch, useSelector } from 'react-redux';
 import { getGist } from './slice/HomeSlice'
 export const gistContext = createContext(null);
+
+
+/* I am using Local useReducer, as it is better approach then useState, when you have multiple States on Scree. as it makes code very clean */
+
+const GistLocalReducer = (prevState, action) => {
+  switch (action.type) {
+    case 'setGistList':
+      return {
+        ...prevState,
+        gistList: action.payload,
+      };
+    case 'setFilterGist':
+      return {
+        ...prevState,
+        filterGist: action.payload,
+      };
+    case 'setSText':
+      return {
+        ...prevState,
+        sText: action.payload,
+      };
+    default:
+      break;
+  }
+};
+
+const localInitialState = {
+  gistList: [],
+  filterGist: [],
+  sText: '',
+};
+
 const App = () => {
   const dispatch = useDispatch();
+  const [localState, dispatcher] = useReducer(GistLocalReducer, localInitialState);
+  const { gistList, filterGist, sText } = localState;
   const gist = useSelector(state => state?.home); // this is redux selector to catch data globally within the app
-  const [gistList, setGistList] = useState([]) // this will setstate once api gives response
-  const [filterGist, setFilterGist] = useState([]);
-  const [sText, setSText] = useState();
-  const { gistLoading } = gist;
+  const { gistLoading,gistError } = gist;
   /*
   * This useEffect Hooks call Data fronm API
   * Input: get method to call api
@@ -36,7 +67,7 @@ const App = () => {
 
   useEffect(() => {
     if (gist?.gistData !== undefined) {
-      setGistList(gist?.gistData)
+      dispatcher({ type: 'setGistList', payload: gist?.gistData });
     }
   }, [gist]);
 
@@ -60,9 +91,9 @@ const App = () => {
 
   const memoizeGistList = useMemo(() => {
     return (
-      <GistList gist={filterGist.length > 0 ? filterGist : gistList} filterObjectLength={filterGist?.length} isLoading={gistLoading} sText={sText} />
+      <GistList gist={filterGist.length > 0 ? filterGist : gistList} filterObjectLength={filterGist?.length} isLoading={gistLoading} sText={sText} isError={gistError ? true : false} />
     );
-  }, [gistList, filterGist, gistLoading, sText]);
+  }, [gistList, filterGist, gistLoading, sText,gistError]);
 
   /*
 * This Method is using useCallback and getting called from search Component via context
@@ -71,9 +102,9 @@ const App = () => {
 */
   const searchTextGist = useCallback((event) => {
     const text = event.target.value.trim().toLowerCase();
-    setSText(text);
+    dispatcher({ type: 'setSText', payload: text }); // setSText(text);
     const getFilteredData = filterByName(gistList, text);
-    setFilterGist(getFilteredData);
+    dispatcher({ type: 'setFilterGist', payload: getFilteredData }); //setFilterGist(getFilteredData);
   }, [gistList]);
 
   /*
