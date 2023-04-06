@@ -38,12 +38,14 @@ const localInitialState = {
   sText: '',
 };
 
+/* We have use useMemo and useCallback for Optimization, we could also have use lazy loading and supension for controlling components, but it is not asked here to do*/
+
 const App = () => {
   const dispatch = useDispatch();
   const [localState, dispatcher] = useReducer(GistLocalReducer, localInitialState);
   const { gistList, filterGist, sText } = localState;
   const gist = useSelector(state => state?.home); // this is redux selector to catch data globally within the app
-  const { gistLoading,gistError } = gist;
+  const { gistLoading, gistError } = gist;
   /*
   * This useEffect Hooks call Data fronm API
   * Input: get method to call api
@@ -93,7 +95,7 @@ const App = () => {
     return (
       <GistList gist={filterGist.length > 0 ? filterGist : gistList} filterObjectLength={filterGist?.length} isLoading={gistLoading} sText={sText} isError={gistError ? true : false} />
     );
-  }, [gistList, filterGist, gistLoading, sText,gistError]);
+  }, [gistList, filterGist, gistLoading, sText, gistError]);
 
   /*
 * This Method is using useCallback and getting called from search Component via context
@@ -112,7 +114,7 @@ const App = () => {
 * Input: will take Text as Input
 * Output: will filter out the list by name
 */
-  const filterByName =(object, text) => {
+  const filterByName = (object, text) => {
     return object.filter(item => {
       const { owner } = item;
       return owner?.login.toLowerCase().includes(text);
