@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 
 
 const GistList = (props) => {
+    // This component will receave all needed props. 
     const { sText, filterObjectLength, gist, isLoading,isError } = props;
-    // console.log("gist",gist,isLoading)
     /* 
     This Functions format the date with function memoization
     input : This FUnctions Take Date Receive from API 
