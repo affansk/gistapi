@@ -92,8 +92,8 @@ export const FileSection = styled.div`
 display: flex;
 flex-direction: row;
 align-items:center;
-max-width:100%,
-flex-wrap:wrap
+max-width:100%;
+flex-wrap:wrap;
 `
 export const InnerFileSection = styled.div`
 display: flex;
