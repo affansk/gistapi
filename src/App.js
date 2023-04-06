@@ -112,12 +112,12 @@ const App = () => {
 * Input: will take Text as Input
 * Output: will filter out the list by name
 */
-  const filterByName = useCallback((object, text) => {
+  const filterByName =(object, text) => {
     return object.filter(item => {
       const { owner } = item;
       return owner?.login.toLowerCase().includes(text);
     });
-  }, []);
+  }
 
 
   // From Here it starts the main jsx where you return the View

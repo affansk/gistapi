@@ -77,10 +77,11 @@ export const AvatarImg = styled.div`
 //   height: 50px;
 `
 export const ContainerIcon = styled.div`
-
+justify-content: center;
+align-items:center;
 `
 export const ContainerText = styled.div`
-margin-left:8px;
+margin-left:5px;
 
 p a {
     text-decoration-line : none;

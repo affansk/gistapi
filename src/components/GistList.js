@@ -35,10 +35,10 @@ const GistList = (props) => {
                         <InnerFileSection key={`${key}-${value}`}>
 
                             <FileIcon>
-                                <Octicon name="file" small='true' />
+                                <Octicon name="file" small='true' style={{ color: '#2974da' }}  />
                             </FileIcon>
                             <FileTags>
-                                <p> <a rel="noreferrer" key={key} target='_blank' href={value?.raw_url}>{key}</a></p>
+                                <p> <a style={{ color: '#2974da' }}  rel="noreferrer" key={key} target='_blank' href={value?.raw_url}>{key}</a></p>
                             </FileTags>
 
 
@@ -58,36 +58,36 @@ const GistList = (props) => {
             <ContainerHeaderRight>
                 <ContainerHeaderRightData>
                     <ContainerIcon>
-                        <Octicon name="code" small='true' />
+                        <Octicon name="code" small='true'  style={{ color: '#2974da' }}/>
                     </ContainerIcon>
                     <ContainerText>
-                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={'#'}>
+                        <p> <a rel="noreferrer" key={'#'}  href={'/'} style={{color: '#2974da'}}>
                             {item?.files ? `${Object.keys(item.files).length} Files` : 'No files'}
                         </a></p>
                     </ContainerText>
                 </ContainerHeaderRightData>
                 <ContainerHeaderRightData>
                     <ContainerIcon>
-                        <Octicon name="repo-forked" small='true' />
+                        <Octicon name="repo-forked" small='true' style={{ color: '#2974da' }} />
                     </ContainerIcon>
                     <ContainerText>
-                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.forks_url}>Fork</a></p>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.forks_url} style={{color: '#2974da'}}>Forks</a></p>
                     </ContainerText>
                 </ContainerHeaderRightData>
                 <ContainerHeaderRightData>
                     <ContainerIcon>
-                        <Octicon name="comment" small='true' />
+                        <Octicon name="comment" small='true' style={{ color: '#2974da' }} />
                     </ContainerIcon>
                     <ContainerText>
-                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.comments_url}>Comments</a></p>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.comments_url} style={{color: '#2974da'}}>Comments</a></p>
                     </ContainerText>
                 </ContainerHeaderRightData>
                 <ContainerHeaderRightData>
                     <ContainerIcon>
-                        <Octicon name="star" small='true' />
+                        <Octicon name="star" small='true' style={{ color: '#2974da' }} />
                     </ContainerIcon>
                     <ContainerText>
-                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.owner?.starred_url}>Stars</a></p>
+                        <p> <a rel="noreferrer" key={'#'} target='_blank' href={item?.owner?.starred_url} style={{color: '#2974da'}}>Stars</a></p>
                     </ContainerText>
                 </ContainerHeaderRightData>
 
@@ -139,23 +139,6 @@ const GistList = (props) => {
                                         <GenratedSection>
                                             {`${item?.description}`}
                                         </GenratedSection>
-                                        {/* <FileSection>
-                                            {item?.files && Object.entries(item?.files).map(([key, value]) => {
-                                                return (
-                                                    <InnerFileSection key={`${key}-${value}`}>
-                                                 
-                                                        <FileIcon>
-                                                            <Octicon name="file" small='true' />
-                                                        </FileIcon>
-                                                        <FileTags>
-                                                            <p> <a rel="noreferrer" key={key} target='_blank' href={value?.raw_url}>{key}</a></p>
-                                                        </FileTags>
-                                                   
-                                      
-                                                    </InnerFileSection>
-                                                )
-                                            })}
-                                        </FileSection> */}
                                         {renderFileSection(item)}
                                     </InnerContainer>
                                 )
